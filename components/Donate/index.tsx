@@ -63,7 +63,7 @@ const Donate = () => {
                     </select>
                   </div>
                   <div className="w-full px-4 md:w-1/2 mb-4">
-                    <label htmlFor="quantity" className="mb-3 mr-3 text-sm font-medium text-dark dark:text-white">Location:</label> 
+                    <label htmlFor="quantity" className="mb-3 mr-3 text-sm font-medium text-dark dark:text-white">Quantity</label> 
                     <input
                       name="quantity"
                       type="number"
