@@ -2,10 +2,14 @@ import Link from "next/link";
 
 const Breadcrumb = ({
   pageName,
+  title,
   description,
+  bottomMargin,
 }: {
   pageName: string;
+  title?: string;
   description: string;
+  bottomMargin?: number;
 }) => {
   return (
     <>
@@ -32,9 +36,9 @@ const Breadcrumb = ({
         <div className="container">
           <div className="-mx-4 flex flex-wrap items-center">
             <div className="w-full px-4">
-              <div className="mb-8">
+              <div className={`mb-${bottomMargin ?? 8}`}>
                 <h1 className="mb-5 text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                  {pageName}
+                  {title || pageName}
                 </h1>
                 <p className="text-base font-medium leading-relaxed text-body-color">
                   {description}

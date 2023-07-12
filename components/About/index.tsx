@@ -2,29 +2,29 @@ import AboutSection from "./AboutSection";
 
 const Sections = [
   {
-    header: "WHY DOES HUNGER STILL EXIST?",
-    description: "In a food paradise, thousands of households still go to bed hungry. The situation has been further exacerbated in the past two years with the pandemic and staggering inflation on the cost of living.",
+    header: "Addressing Food Insecurity",
+    description: "We aim to address food insecurity by connecting donors with surplus food to individuals and families in need. We believe that access to nutritious food is a fundamental right, and we are committed to ensuring that no one in our community goes hungry.",
     link: "/food-insecurity"
   },
   {
-    header: "WE PUT SMILES BACK ON THEIR FACES",
-    description: "It’s never a dull day at The Foodhang. Learn more about our latest collaborations and initiatives and discover how you can play a part.",
+    header: "Learn About Food Insecurity",
+    description: "Explore our website to learn more about the challenges of food insecurity and the significance of reducing food waste. Discover how our platform plays a vital role in bridging the gap between surplus food and those who need it the most.",
     link: ""
   },
   {
-    header: "WE INNOVATE",
-    description: "No longer bounded by donations and funds, we seize every opportunity to organise more enriching programmes and events for our beneficiaries.",
+    header: "Convenient and Efficient Platform",
+    description: "We provide a convenient and efficient platform that makes it easy for donors to contribute and for recipients to access the donated food items. Through our Food Sharing Platform, you have the opportunity to be part of a compassionate community that believes in the power of sharing and supporting one another.",
     link: ""
   },
   {
-    header: "WE NEED $$",
-    description: "That bill from your grocery trip may be more than what some of our beneficiaries earn in 1 month. Every dollar takes us a step closer to ending food insecurity.",
-    link: ""
-  },
-  {
-    header: "FILL OUR SHELVES",
-    description: "Planted across Singapore, we have bank boxes available for you to drop off your excess food. Your excess food is basic necessity to us. Fill our shelves with your food donations so that we can fill their bellies.",
+    header: "Make a Difference",
+    description: "Join us in addressing food insecurity, reducing food waste, and creating a more sustainable future for all. We invite you to explore our website, learn more about our initiatives, and discover how you can contribute to our cause. Every action, no matter how small, has the potential to make a significant impact on someone's life.",
     link: "/donate-food"
+  },
+  {
+    header: "Join Our Community",
+    description: "Thank you for visiting our Food Sharing Platform. We look forward to having you as part of our community. Together, let's create a world where everyone has access to nutritious food and no one has to worry about where their next meal will come from.",
+    link: "/contact"
   } 
 ]
 

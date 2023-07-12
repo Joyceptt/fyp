@@ -1,11 +1,9 @@
-
-
 export default function handler(req, res) {
-  const { method } = req;
+  const { method, body } = req;
   console.log("method: ", method)
   console.log("Request = ", req.body);
   console.log("Type = ", typeof(req.body))
-  console.log(req.body.location, req.body.message, req.body.email)
+  console.log(req.body.location, req.body.message, req.body.email, req.body.remarks)
   switch (method) {
     case "POST":
       res.status(200).end(JSON.stringify({
