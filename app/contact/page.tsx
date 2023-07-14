@@ -6,7 +6,7 @@ const ContactPage = () => {
     <>
       <Breadcrumb
         pageName="Contact Page"
-        description=""
+        bottomMargin={1}
       />
 
       <Contact />

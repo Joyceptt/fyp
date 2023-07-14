@@ -8,7 +8,7 @@ const Breadcrumb = ({
 }: {
   pageName: string;
   title?: string;
-  description: string;
+  description?: string;
   bottomMargin?: number;
 }) => {
   return (
@@ -40,9 +40,12 @@ const Breadcrumb = ({
                 <h1 className="mb-5 text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   {title || pageName}
                 </h1>
-                <p className="text-base font-medium leading-relaxed text-body-color">
+                {description && (
+                  <p className="text-base font-medium leading-relaxed text-body-color">
                   {description}
-                </p>
+                  </p>
+                  )
+                }
               </div>
             </div>
            
