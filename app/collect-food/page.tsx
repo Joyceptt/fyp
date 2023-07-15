@@ -23,9 +23,9 @@ const Collectible = ({ items, index } : { items : CollectiblesProps, index: numb
       className="items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
       expanded={index === 0}
     >
-      <div className="w-full mb-4 flex">
-        {items.items && items.items.map((item, idx) => (
-          <div key={idx} className="mr-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full flex flex-wrap content-start gap-y-3">
+        {items.items ? items.items.map((item, idx) => (
+          <div key={idx} className="mr-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
             <a>
               <Image className="rounded-t-lg" src={item.image} alt="" height={200} width={385} style={{height: 200}} />
             </a>
@@ -37,11 +37,7 @@ const Collectible = ({ items, index } : { items : CollectiblesProps, index: numb
               <p className="mb-3 text-base font-normal text-body-color">{item.description}</p>
             </div>
           </div>
-
-        ))}
-        {!items.items && (
-          <p>Nothing availble for collection yet!</p>
-        )}
+        )) : <p>Nothing availble for collection yet!</p> }
       </div>
     </Collapse>
   );
@@ -74,6 +70,37 @@ const CollectFood = () => {
           image: "/images/food/vegetables.jpg",
           category: "Grocery",
           quantity: 4,
+        },
+        {
+          image: "/images/food/vegetables.jpg",
+          category: "Grocery",
+          quantity: 4,
+        },
+        {
+          image: "/images/food/vegetables.jpg",
+          category: "Grocery",
+          quantity: 9,
+          description: "Expiring August 2023, from Giant"
+        },
+        {
+          image: "/images/food/vegetables.jpg",
+          category: "Grocery",
+          quantity: 4,
+        },
+        {
+          image: "/images/food/vegetables.jpg",
+          category: "Grocery",
+          quantity: 4,
+        },
+        {
+          image: "/images/food/vegetables.jpg",
+          category: "Grocery",
+          quantity: 4,
+        },
+        {
+          image: "/images/food/vegetables.jpg",
+          category: "Grocery",
+          quantity: 20,
         }
       ],
     },

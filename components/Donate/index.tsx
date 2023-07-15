@@ -17,7 +17,7 @@ const Donate = ({ router }) => {
   
   useEffect(() => {
     const formElem = document.querySelector("form");
-    formElem.addEventListener("formdata", (e) => {
+    formElem?.addEventListener("formdata", (e) => {
       const formData = e.formData;
       formData.set("images", JSON.stringify(selectedImages));
     })
