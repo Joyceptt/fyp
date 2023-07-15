@@ -1,6 +1,68 @@
+'use client'
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
-import Collectibles, { CollectiblesProps } from "@/components/Collectibles";
+import {
+  Button,
+  Card,
+  UncontrolledCollapse,
+  CardBody,
+} from "reactstrap";
+import Image from 'next/image';
+
+interface ItemProp {
+  image: string;
+  category: string;
+  quantity: number;
+  description?: string;
+}
+
+export interface CollectiblesProps {
+  location: string;
+  items?: ItemProp[];
+}
+
+const Collectible = ({ items } : { items : CollectiblesProps}) => {
+  return (
+    <div>
+      <Button color="primary" id="toggler" style={{ marginBottom: '1rem' }}>
+        {items.location}
+      </Button>
+      <UncontrolledCollapse toggler="toggler">
+        <Card>
+          <CardBody className="w-full mb-4 flex">
+            {items.items && items.items.map((item, idx) => (
+              <div key={idx} className="mr-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a>
+                  <Image className="rounded-t-lg" src={item.image} alt="" height={200} width={385} style={{height: 200}} />
+                </a>
+                <div className="p-5">
+                  <a href="#">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{`${item.category}`}</h5>
+                  </a>
+                  <p className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-400">{`Quantity: ${item.quantity}`}</p>
+                  <p className="mb-3 text-base font-normal text-gray-700 dark:text-gray-400">{item.description}</p>
+                </div>
+              </div>
+
+            ))}
+          </CardBody>
+        </Card>
+      </UncontrolledCollapse>
+    </div>
+  );
+}
+
+
+const Collectibles = ({ data } : { data: CollectiblesProps[] }) => {
+  return (
+    <>
+      {data.map((locations, idx) => (
+        <Collectible key={idx} items={locations} />
+      ))}
+    </>
+  );
+}
+
 
 const CollectFood = () => {
   const availableCollections: CollectiblesProps[] = [
@@ -11,7 +73,13 @@ const CollectFood = () => {
           image: "/images/food/dry_food.jpg",
           category: "Non-vegetarian Food",
           quantity: 8,
+          description: "Expiring September 2023, contains nut allergy"
         },
+        {
+          image: "/images/food/vegetables.jpg",
+          category: "Grocery",
+          quantity: 4,
+        }
       ],
     },
     {
@@ -24,6 +92,7 @@ const CollectFood = () => {
           image: "/images/food/vegetables.jpg",
           category: "Grocery",
           quantity: 12,
+          description: "Tomato, onions and spinach."
         }
       ]
     },
