@@ -1,12 +1,7 @@
 'use client'
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
-import {
-  Button,
-  Card,
-  UncontrolledCollapse,
-  CardBody,
-} from "reactstrap";
+import { Collapse, Text } from "@nextui-org/react";
 import Image from 'next/image';
 
 interface ItemProp {
@@ -21,45 +16,45 @@ export interface CollectiblesProps {
   items?: ItemProp[];
 }
 
-const Collectible = ({ items } : { items : CollectiblesProps}) => {
+const Collectible = ({ items, index } : { items : CollectiblesProps, index: number }) => {
   return (
-    <div>
-      <Button color="primary" id="toggler" style={{ marginBottom: '1rem' }}>
-        {items.location}
-      </Button>
-      <UncontrolledCollapse toggler="toggler">
-        <Card>
-          <CardBody className="w-full mb-4 flex">
-            {items.items && items.items.map((item, idx) => (
-              <div key={idx} className="mr-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <a>
-                  <Image className="rounded-t-lg" src={item.image} alt="" height={200} width={385} style={{height: 200}} />
-                </a>
-                <div className="p-5">
-                  <a href="#">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{`${item.category}`}</h5>
-                  </a>
-                  <p className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-400">{`Quantity: ${item.quantity}`}</p>
-                  <p className="mb-3 text-base font-normal text-gray-700 dark:text-gray-400">{item.description}</p>
-                </div>
-              </div>
+    <Collapse
+      title={items.location}
+      className="items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+      expanded={index === 0}
+    >
+      <div className="w-full mb-4 flex">
+        {items.items && items.items.map((item, idx) => (
+          <div key={idx} className="mr-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <a>
+              <Image className="rounded-t-lg" src={item.image} alt="" height={200} width={385} style={{height: 200}} />
+            </a>
+            <div className="p-5">
+              <a href="#">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{`${item.category}`}</h5>
+              </a>
+              <p className="mb-1 text-sm font-medium text-body-color">{`Quantity: ${item.quantity}`}</p>
+              <p className="mb-3 text-base font-normal text-body-color">{item.description}</p>
+            </div>
+          </div>
 
-            ))}
-          </CardBody>
-        </Card>
-      </UncontrolledCollapse>
-    </div>
+        ))}
+        {!items.items && (
+          <p>Nothing availble for collection yet!</p>
+        )}
+      </div>
+    </Collapse>
   );
 }
 
 
 const Collectibles = ({ data } : { data: CollectiblesProps[] }) => {
   return (
-    <>
+    <Collapse.Group splitted>
       {data.map((locations, idx) => (
-        <Collectible key={idx} items={locations} />
+        <Collectible key={idx} items={locations} index={idx} />
       ))}
-    </>
+    </Collapse.Group>
   );
 }
 
@@ -136,14 +131,14 @@ const CollectFood = () => {
         </div>
       </div>
 
-      <div className="container mt-4">
-        <div className="-mx-4 flex flex-wrap items-center">
-          <div className="w-full px-4">
+      <div className="container mt-8">
+        <div className="-mx-4 flex flex-wrap items-center text-body-color">
+          <div className="w-full">
             <Collectibles data={availableCollections} />
           </div>
         </div>
       </div>
-      
+
     </>
   );
 };
