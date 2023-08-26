@@ -1,14 +1,16 @@
 'use client'
 import Breadcrumb from "@/components/Common/Breadcrumb";
-
-import { Collapse, Text } from "@nextui-org/react";
+import { useState, useEffect } from "react";
+import { Collapse } from "@nextui-org/react";
+import { css } from "@emotion/react";
+import { BeatLoader } from "react-spinners";
 import Image from 'next/image';
 
 interface ItemProp {
   image: string;
-  category: string;
+  foodType: string;
   quantity: number;
-  description?: string;
+  remarks?: string;
 }
 
 export interface CollectiblesProps {
@@ -31,10 +33,10 @@ const Collectible = ({ items, index } : { items : CollectiblesProps, index: numb
             </a>
             <div className="p-5">
               <a href="#">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{`${item.category}`}</h5>
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{`${item.foodType}`}</h5>
               </a>
               <p className="mb-1 text-sm font-medium text-body-color">{`Quantity: ${item.quantity}`}</p>
-              <p className="mb-3 text-base font-normal text-body-color">{item.description}</p>
+              <p className="mb-3 text-base font-normal text-body-color">{item.remarks}</p>
             </div>
           </div>
         )) : <p>Nothing availble for collection yet!</p> }
@@ -54,83 +56,140 @@ const Collectibles = ({ data } : { data: CollectiblesProps[] }) => {
   );
 }
 
+const SAMPLE_ITEMS: CollectiblesProps[] = [
+  {
+    location: "Jurong West",
+    items: [
+      {
+        image: "/images/food/dry_food.jpg",
+        foodType: "Non-vegetarian Food",
+        quantity: 8,
+        remarks: "Expiring September 2023, contains nut allergy"
+      },
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 4,
+      },
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 4,
+      },
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 9,
+        remarks: "Expiring August 2023, from Giant"
+      },
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 4,
+      },
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 4,
+      },
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 4,
+      },
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 20,
+      }
+    ],
+  },
+  {
+    location: "Jurong East",
+  },
+  {
+    location: "Buona Vista",
+    items: [
+      {
+        image: "/images/food/vegetables.jpg",
+        foodType: "Grocery",
+        quantity: 12,
+        remarks: "Tomato, onions and spinach."
+      }
+    ]
+  },
+  {
+    location: "Orchard",
+  },
+  {
+    location: "Raffles Place",
+  },
+  {
+    location: "Bedok",
+  },
+  {
+    location: "Tampines",
+  },
+]
+
+
 
 const CollectFood = () => {
-  const availableCollections: CollectiblesProps[] = [
-    {
-      location: "Jurong West",
-      items: [
-        {
-          image: "/images/food/dry_food.jpg",
-          category: "Non-vegetarian Food",
-          quantity: 8,
-          description: "Expiring September 2023, contains nut allergy"
-        },
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 4,
-        },
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 4,
-        },
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 9,
-          description: "Expiring August 2023, from Giant"
-        },
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 4,
-        },
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 4,
-        },
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 4,
-        },
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 20,
-        }
-      ],
-    },
-    {
-      location: "Jurong East",
-    },
-    {
-      location: "Buona Vista",
-      items: [
-        {
-          image: "/images/food/vegetables.jpg",
-          category: "Grocery",
-          quantity: 12,
-          description: "Tomato, onions and spinach."
-        }
-      ]
-    },
-    {
-      location: "Orchard",
-    },
-    {
-      location: "Raffles Place",
-    },
-    {
-      location: "Bedok",
-    },
-    {
-      location: "Tampines",
-    },
-  ]
+  // can fetch locations in future
+  const LOCATIONS = [
+    "Jurong West", "Jurong East", "Buona Vista", "Orchard", "Raffles Place", "Bedok", "Tampines",
+  ];
+  const [locations, setLocations] = useState<string[]>(LOCATIONS);
+  const [availableCollections, setAvailableCollections] = useState<CollectiblesProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // add loading state
+
+  const getData = async () => {
+    const res = await fetch("/api/collect-food", {  method: "GET" });
+    const data = await res.json()["data"];
+    return data;
+  }
+
+  useEffect(() => {
+    let isSubscribed = true;
+  
+    // declare the async data fetching function
+    const fetchData = async () => {
+      // get the data from the api
+      const res = await fetch(`/api/collect-food`);
+      // convert the data to json
+      const json = await res.json();
+      const data = json["data"];
+  
+      // set state with the result if `isSubscribed` is true
+      if (isSubscribed) {
+        setAvailableCollections(locations.map((location) => {
+          return {
+            location: location,
+            items: data.filter((item) => item.location === location).map((item) => {
+              return {
+                image: item.images[0],
+                foodType: item.foodType,
+                quantity: item.quantity,
+                remarks: item.remarks,
+              }
+            })
+          }
+        }));
+      }
+      setIsLoading(false); // set loading state to false
+    }
+  
+    // call the function
+    fetchData().catch(err => {
+      console.log(err);
+      setIsLoading(false);
+    });;
+    
+    // cancel any future `setData`
+    return () => {
+      isSubscribed = false;
+    };
+  }, [])
 
   return (
     <>
@@ -157,15 +216,23 @@ const CollectFood = () => {
           </div>
         </div>
       </div>
-
-      <div className="container mt-8">
-        <div className="-mx-4 flex flex-wrap items-center text-body-color">
-          <div className="w-full">
-            <Collectibles data={availableCollections} />
+      {isLoading ? (
+        <div>
+          <div className="sweet-loading flex justify-center items-center h-72">
+            <BeatLoader color={"#123abc"} loading={isLoading} size={15} />
           </div>
         </div>
-      </div>
-
+        )
+        : (
+          <div className="container mt-8">
+            <div className="-mx-4 flex flex-wrap items-center text-body-color">
+              <div className="w-full">
+                <Collectibles data={availableCollections} />
+              </div>
+            </div>
+          </div>
+        )
+      }
     </>
   );
 };

@@ -38,10 +38,31 @@ const Donate = ({ router }) => {
     }
   }
 
-  const handleSubmit = (e) => {
-    router.push("/contact")
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formFields = form.elements;
+    console.log("Hello")
+    const data = {
+      name: formFields.name.value,
+      email: formFields.email.value,
+      foodType: formFields.foodType.value,
+      quantity: formFields.quantity.value,
+      location: formFields.location.value,
+      remarks: formFields.remarks.value,
+      images: selectedImages,
+    }
+    const res = await fetch("/api/donate-food", { method: "POST", body: JSON.stringify(data)});
+    const json = await res.json();
+    if (res.status === 200) {
+      router.push("/contact");
+      setTimeout(() => {
+        alert(`Hey ${formFields.name.value}, thank you for your donation! We will be in touch with you shortly. Feel free to contact us here too!`)
+      }, 500)
+    } else {
+      alert(`Something went wrong. Please try again later. \nError = ${json.error}`);
+    }
   }
-
 
   return (
     <section id="donate" className="overflow py-8 md:py-10 lg:py-12">
@@ -60,7 +81,6 @@ const Donate = ({ router }) => {
                 Choose a deposit location and enter your details below.
               </p>
               <form id="form" action="/api/donate-food" method="POST" onSubmit={handleSubmit}>
-              {/* <form id="form" action="/api/donate-food" method="POST"> onSubmit={handleSubmit}> */}
                 <div className="-mx-4 flex flex-wrap">
                   <div className="w-full px-4 md:w-1/2">
                     <div className="mb-8">
@@ -96,7 +116,7 @@ const Donate = ({ router }) => {
                   </div>
                   <div className="w-full px-4 md:w-1/2 mb-4">
                     <label htmlFor="foodType" className="mb-3 mr-3 text-sm font-medium text-dark dark:text-white">Food Type:</label> 
-                    <select name="location" id="locations" className="mb-3 text-sm font-medium text-dark dark:text-white rounded-md border border-transparent px-3" > 
+                    <select name="foodType" id="foodType" className="mb-3 text-sm font-medium text-dark dark:text-white rounded-md border border-transparent px-3" > 
                       {foodTypes.map((foodType, idx) => (
                         <option value={foodType} key={idx}>{foodType}</option>
                       ))}
@@ -122,19 +142,19 @@ const Donate = ({ router }) => {
                   <div className="flex w-full px-4 mb-4">
                     <div className="flex">
                         {selectedImages?.map((selectedImg, idx) => (
-                        <div key={idx}>
-                          <button
-                            className="absolute ml-2 bg-gray-200 text-black"
-                            onClick={(event) => deleteImg(event, idx)}
-                          >
-                            <span>&times;</span>
-                          </button> 
-                          <div className="mr-1 w-40 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer">
-                            <Image src={selectedImg} alt="" height={80} width={90} style={{ height: 'auto'}}/>
-                          </div>
-                        </div>
-                        
-                      ))}
+                            <div key={idx}>
+                              <button
+                                className="absolute ml-2 bg-gray-200 text-black"
+                                onClick={(event) => deleteImg(event, idx)}
+                              >
+                                <span>&times;</span>
+                              </button> 
+                              <div className="mr-1 w-40 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer">
+                                <Image src={selectedImg} alt="" height={80} width={90} style={{ height: 'auto'}}/>
+                              </div>
+                            </div>
+                          )
+                        )}
                     </div>
                     <label>
                       <input

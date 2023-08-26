@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+// Sign in Page
 const SigninPage = () => {
   return (
     <>
@@ -14,7 +15,7 @@ const SigninPage = () => {
                 <p className="mb-11 text-center text-base font-medium text-body-color">
                   Login to your account for a faster checkout.
                 </p>
-                <button className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white">
+                {/* <button className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white">
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -49,14 +50,14 @@ const SigninPage = () => {
                     </svg>
                   </span>
                   Sign in with Google
-                </button>
-                <div className="mb-8 flex items-center justify-center">
+                </button> */}
+                {/* <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color sm:block"></span>
                   <p className="w-full px-5 text-center text-base font-medium text-body-color">
                     Or, sign in with your email
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color sm:block"></span>
-                </div>
+                </div> */}
                 <form>
                   <div className="mb-8">
                     <label
