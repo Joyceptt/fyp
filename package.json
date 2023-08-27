@@ -13,17 +13,21 @@
     "@nextui-org/react": "1.0.0-beta.13",
     "@types/formidable": "^3.4.0",
     "axios": "^1.4.0",
+    "dns": "^0.2.2",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "formidable": "^3.5.0",
+    "fs": "0.0.1-security",
     "js-cookie": "^3.0.5",
     "mongodb": "^5.7.0",
+    "net": "^1.0.2",
     "next": "13.3.2-canary.6",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-modal-video": "^2.0.0",
-    "react-spinners": "^0.13.8"
+    "react-spinners": "^0.13.8",
+    "tls": "^0.0.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
