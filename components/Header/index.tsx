@@ -1,13 +1,15 @@
 "use client";
-import Image from "next/image";
+import { Menu } from "@/types/menu";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import ThemeToggler from "./ThemeToggler";
-import menuData from "./menuData";
+import { useEffect, useState, useContext } from "react";
+// import ThemeToggler from "./ThemeToggler";
+import Cookies from "js-cookie"
+import { UserContext } from "@/app/providers";
 
 const Header = () => {
   // Navbar toggle
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [navbarOpen, setNavbarOpen] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // add loading state
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
@@ -21,6 +23,7 @@ const Header = () => {
       setSticky(false);
     }
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
   });
@@ -34,6 +37,47 @@ const Header = () => {
       setOpenIndex(index);
     }
   };
+
+  const {user, setUser} = useContext(UserContext);
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    setIsLoggedIn(false);
+    setUser(null);
+  }
+
+  const menuData: Menu[] = [
+    {
+      id: 1,
+      title: "Home",
+      path: "/",
+      newTab: false,
+    },
+    {
+      id: 2,
+      title: "Food Insecurity",
+      path: "/food-insecurity",
+      newTab: false,
+    },
+    {
+      id: 33,
+      title: "Donate Food",
+      path: user ? "/donate-food" : "/signin",
+      newTab: false,
+    },
+    {
+      id: 3,
+      title: "Collect Food",
+      path: user ? "/collect-food" : "/signin",
+      newTab: false,
+    },
+    {
+      id: 4,
+      title: "Contact Us",
+      path: "/contact",
+      newTab: false,
+    },
+  ];
 
   return (
     <>
@@ -135,7 +179,27 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
+              
               <div className="flex items-center justify-end pr-16 lg:pr-0">
+              {user ? (
+                <>
+                  <button
+                    onClick={handleLogout}
+                    className="ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                  >
+                    Sign Out
+                  </button>
+                  <Link
+                    href="/profile"
+                    className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
+                  >
+                    {user?.name}
+                  </Link>
+                </>
+                
+              ) : (
+                <>
+                
                 <Link
                   href="/signin"
                   className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
@@ -151,6 +215,8 @@ const Header = () => {
                 {/* <div>
                   <ThemeToggler />
                 </div> */}
+                 </>
+              )}
               </div>
             </div>
           </div>

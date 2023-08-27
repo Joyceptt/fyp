@@ -26,6 +26,9 @@ dependencies:
   formidable:
     specifier: ^3.5.0
     version: 3.5.0
+  js-cookie:
+    specifier: ^3.0.5
+    version: 3.0.5
   mongodb:
     specifier: ^5.7.0
     version: 5.7.0
@@ -4874,6 +4877,11 @@ packages:
   /issue-regex@3.1.0:
     resolution: {integrity: sha512-0RHjbtw9QXeSYnIEY5Yrp2QZrdtz21xBDV9C/GIlY2POmgoS6a7qjkYS5siRKXScnuAj5/SPv1C3YForNCHTJA==}
     engines: {node: '>=10'}
+    dev: false
+
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
     dev: false
 
   /js-sdsl@4.4.1:

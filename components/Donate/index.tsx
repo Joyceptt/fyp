@@ -42,7 +42,6 @@ const Donate = ({ router }) => {
     e.preventDefault();
     const form = e.target;
     const formFields = form.elements;
-    console.log("Hello")
     const data = {
       name: formFields.name.value,
       email: formFields.email.value,

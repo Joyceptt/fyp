@@ -19,6 +19,7 @@ export interface CollectiblesProps {
 }
 
 const Collectible = ({ items, index } : { items : CollectiblesProps, index: number }) => {
+
   return (
     <Collapse
       title={items.location}
@@ -29,7 +30,7 @@ const Collectible = ({ items, index } : { items : CollectiblesProps, index: numb
         {items.items ? items.items.map((item, idx) => (
           <div key={idx} className="mr-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
             <a>
-              <Image className="rounded-t-lg" src={item.image} alt="" height={200} width={385} style={{height: 200}} />
+              <Image className="rounded-t-lg" src={item.image ?? "/images/food/stock_food.avif"} alt="" height={200} width={385} style={{height: 200}} />
             </a>
             <div className="p-5">
               <a href="#">
