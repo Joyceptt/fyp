@@ -1,4 +1,4 @@
-import client from "../utils/driver"
+import client from "../../utils/driver"
 
 export default async function handler(req: any, res: any) {
   const { method, body } = req;

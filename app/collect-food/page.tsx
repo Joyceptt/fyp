@@ -190,7 +190,7 @@ const CollectFood = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [])
+  }, [locations])
 
   return (
     <>

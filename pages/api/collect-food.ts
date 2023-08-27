@@ -1,4 +1,4 @@
-import client from "../utils/driver"
+import client from "../../utils/driver"
 
 export default async function handler(_req: any, res: any) {
   try {
