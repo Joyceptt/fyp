@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const AboutSection = (props: {header: string, description: string, link?: string}) => {
+const AboutSection = (props: {header: string, description: string, link?: string, src?: string }) => {
   return (
    
       <section
@@ -17,6 +17,7 @@ const AboutSection = (props: {header: string, description: string, link?: string
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                 {props.header}
                 </h1>
+                <img style={{ width: 800, height: 340 }} src={props.src}></img>
                 <p className="mb-2 text-base font-medium !leading-relaxed text-body-color dark:text-white dark:opacity-90 sm:text-lg md:text-xl">
                 {props.description}
                 </p>
