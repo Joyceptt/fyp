@@ -3,7 +3,7 @@ import { Menu } from "@/types/menu";
 import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
 // import ThemeToggler from "./ThemeToggler";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import { UserContext } from "@/app/providers";
 
 const Header = () => {
@@ -17,15 +17,19 @@ const Header = () => {
   // Sticky Navbar
   const [sticky, setSticky] = useState(false);
   const handleStickyNavbar = () => {
-    if (window.scrollY >= 80) {
-      setSticky(true);
-    } else {
-      setSticky(false);
+    if (typeof window !== "undefined") {
+      if (window.scrollY >= 80) {
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
     }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleStickyNavbar);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleStickyNavbar);
+    }
   });
 
   // submenu handler
@@ -38,13 +42,21 @@ const Header = () => {
     }
   };
 
-  const {user, setUser} = useContext(UserContext);
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
+
+  const { user, setUser } = useContext(UserContext);
 
   const handleLogout = () => {
     Cookies.remove("token");
     setIsLoggedIn(false);
     setUser(null);
-  }
+    localStorage.removeItem("user");
+  };
 
   const menuData: Menu[] = [
     {
@@ -96,8 +108,7 @@ const Header = () => {
                 className={`header-logo block w-full ${
                   sticky ? "py-5 lg:py-2" : "py-8"
                 } `}
-              >
-              </Link>
+              ></Link>
             </div>
             <div className="flex w-full items-center justify-between px-4">
               <div>
@@ -162,15 +173,17 @@ const Header = () => {
                                 openIndex === index ? "block" : "hidden"
                               }`}
                             >
-                              {menuItem && menuItem.submenu && menuItem.submenu.map((submenuItem) => (
-                                <Link
-                                  href={submenuItem.path ?? "#"}
-                                  key={submenuItem.id}
-                                  className="block rounded py-2.5 text-sm text-dark hover:opacity-70 dark:text-white lg:px-3"
-                                >
-                                  {submenuItem.title}
-                                </Link>
-                              ))}
+                              {menuItem &&
+                                menuItem.submenu &&
+                                menuItem.submenu.map((submenuItem) => (
+                                  <Link
+                                    href={submenuItem.path ?? "#"}
+                                    key={submenuItem.id}
+                                    className="block rounded py-2.5 text-sm text-dark hover:opacity-70 dark:text-white lg:px-3"
+                                  >
+                                    {submenuItem.title}
+                                  </Link>
+                                ))}
                             </div>
                           </>
                         )}
@@ -179,44 +192,42 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
-              
+
               <div className="flex items-center justify-end pr-16 lg:pr-0">
-              {user ? (
-                <>
-                  <button
-                    onClick={handleLogout}
-                    className="ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
-                  >
-                    Sign Out
-                  </button>
-                  <Link
-                    href="/profile"
-                    className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
-                  >
-                    {user?.name}
-                  </Link>
-                </>
-                
-              ) : (
-                <>
-                
-                <Link
-                  href="/signin"
-                  className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/signup"
-                  className="ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
-                >
-                  Sign Up
-                </Link>
-                {/* <div>
+                {user ? (
+                  <>
+                    <button
+                      onClick={handleLogout}
+                      className="ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                    >
+                      Sign Out
+                    </button>
+                    <Link
+                      href="/profile"
+                      className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
+                    >
+                      {user?.name}
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/signin"
+                      className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                    >
+                      Sign Up
+                    </Link>
+                    {/* <div>
                   <ThemeToggler />
                 </div> */}
-                 </>
-              )}
+                  </>
+                )}
               </div>
             </div>
           </div>
