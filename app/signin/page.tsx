@@ -23,11 +23,17 @@ const SigninPage = () => {
     });
   
     const data = await response.json();
+    
     setIsLoading(false);
     if (response.status === 200) {
       setIsError(false);
       Cookies.set("token", `${data.name}:${data.email}`, { expires: 2 });
       setUser({name: data.name, email: data.email});
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ name: data.name, email: data.email })
+      );
+      console.log({ data });
       setTimeout(() => {
         router.push("/");
       });
