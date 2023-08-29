@@ -31,3 +31,7 @@
     @apply opacity-100;
   }
 }
+
+.fp-watermark {
+  display: none !important;
+}

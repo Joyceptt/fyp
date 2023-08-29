@@ -1,6 +1,47 @@
+'use client';
 import Link from "next/link";
+import React from 'react';
 
 const SignupPage = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+
+  const handleSubmit = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const form = e.target;
+    const formFields = form.elements;
+    const body = {
+      name: formFields.name.value,
+      email: formFields.email.value,
+      password: formFields.password.value,
+    };
+
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setIsError(false);
+        // Handle successful sign up here (e.g., show success message, redirect user)
+      } else {
+        setIsError(true);
+        // Handle sign up error here (e.g., show error message)
+      }
+    } catch (error) {
+      setIsError(true);
+      console.error("An error occurred:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <section className="relative z-10 overflow-hidden pt-36 pb-16 md:pb-20 lg:pt-[180px] lg:pb-28">
@@ -57,7 +98,7 @@ const SignupPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color sm:block"></span>
                 </div> */}
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-8">
                     <label
                       htmlFor="name"

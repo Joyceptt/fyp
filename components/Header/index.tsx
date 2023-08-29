@@ -38,12 +38,20 @@ const Header = () => {
     }
   };
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, [])
+
   const {user, setUser} = useContext(UserContext);
 
   const handleLogout = () => {
     Cookies.remove("token");
     setIsLoggedIn(false);
     setUser(null);
+    localStorage.removeItem('user');
   }
 
   const menuData: Menu[] = [
