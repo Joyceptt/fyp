@@ -1,10 +1,7 @@
 "use client";
 import AboutSection from "./AboutSection";
 import React from "react";
-import fullpage from "fullpage.js";
-import "animate.css/animate.min.css"; // Import animate.css
-import "fullpage.js/dist/fullpage.min.css"; // Import fullpage.js CSS
-
+import ReactFullpage from '@fullpage/react-fullpage'; // will return static version on server and "live" version on client
 const Sections = [
   {
     header: "Addressing Food Insecurity",
@@ -39,34 +36,32 @@ const Sections = [
 ];
 
 const About = () => {
-  // let fullpageInstance;
-  // React.useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     fullpageInstance = new fullpage("#fullpage", {
-  //       // Fullpage.js options
-  //       scrollBar: true,
-  //       navigation: true, // Enable navigation dots
-  //       sectionSelector: "section",
-  //       // Add more options as needed
-  //     });
-  //   }
-
-  //   return () => {
-  //     if (fullpageInstance) {
-  //       fullpageInstance.destroy("all");
-  //     }
-  //   };
-  // }, []);
+  
   return (
     <div id="fullpage">
-      {Sections.map((sect, i) => (
-        <AboutSection
-          key={i}
-          header={sect.header}
-          description={sect.description}
-          link={sect.link}
-        />
-      ))}
+      <ReactFullpage
+        credits={{ position: "left" }}
+        //fullpage options
+        //licenseKey={"YOUR_KEY_HERE"}
+        sectionSelector={'.section'}
+        navigation
+        render={({ state, fullpageApi }) => {
+          return (
+            <ReactFullpage.Wrapper>
+              {Sections.map((sect, i) => (
+                <div className="section" key={i}>
+                  <AboutSection
+                    key={i}
+                    header={sect.header}
+                    description={sect.description}
+                    link={sect.link}
+                  />
+                </div>
+              ))}
+            </ReactFullpage.Wrapper>
+          );
+        }}
+      />
     </div>
   );
 };

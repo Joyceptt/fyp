@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
+    "@fullpage/react-fullpage": "^0.1.40",
     "@nextui-org/react": "1.0.0-beta.13",
     "@types/formidable": "^3.4.0",
     "axios": "^1.4.0",
